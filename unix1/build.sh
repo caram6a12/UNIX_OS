@@ -52,13 +52,6 @@ extract_output() {
 output_name=$(extract_output "$srcfile" "$kind") \
     || die "не найден комментарий 'Output: <имя>' в '$srcfile'" 4
 
-case "$output_name" in
-    /*) die "недопустимое имя результата '$output_name' (абсолютный путь)" 4 ;;
-    */*) die "недопустимое имя результата '$output_name' (содержит '/')" 4 ;;
-    ..|../*|*/..|*/../*) die "недопустимое имя результата '$output_name'" 4 ;;
-    '') die "пустое имя результата в комментарии 'Output:'" 4 ;;
-esac
-
 tmpdir=$(mktemp -d) || die "не удалось создать временный каталог" 6
 
 exit_handler() {
